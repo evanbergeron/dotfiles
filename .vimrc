@@ -1,4 +1,3 @@
-call pathogen#infect()
 filetype off
 " Basic Shit
 syntax on
@@ -10,9 +9,7 @@ set shiftwidth=4
 set expandtab
 set mouse=a
 set clipboard=unnamed
-" set background=dark
-" colorscheme solarized
-colorscheme zenburn
+set background=dark
 
 " Highlight over 80 characters
 highlight OverLength ctermbg=red ctermfg=white guibg=#592929
@@ -83,10 +80,10 @@ endfunction
 :set dictionary="/usr/dict/words"
 
 " Persistent undo
-" set undodir=~/.vim/undodir
-" set undofile
-" set undolevels=1000 "maximum number of changes that can be undone
-" set undoreload=10000 "maximum number lines to save for undo on a buffer reload
+set undodir=~/.vim/undodir
+set undofile
+set undolevels=1000 "maximum number of changes that can be undone
+set undoreload=10000 "maximum number lines to save for undo on a buffer reload
 
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
@@ -104,16 +101,22 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 au InsertLeave * set nopaste
 
 " Map Ctrl-C to ESC (So it doesn't do anything weird, just fully switches)
-nnoremap <C-c> <Esc>
-" Runs pathogen
-"
+nnoremap <C-c> <Esc>bamboo
+
 " Configure backspace so it acts as it should act
 set backspace=eol,start,indent
 set whichwrap+=<,>,h,l
 set statusline=%t[%{strlen(&fenc)?&fenc:'none'},%{&ff}]%h%m%r%y%=%c,%l/%L\ %P
 set laststatus=2
+call pathogen#infect()
 " Set for nerdtree toggle
 map <C-n> :NERDTreeToggle<CR>
 
 " Points vimwiki to dropbox
 let g:vimwiki_list = [{"path":"~/Dropbox/wiki"}]
+
+" At end because it works here, I guess.
+colorscheme zenburn
+
+" Toggle paste mode
+:nmap \o :set paste!<CR>

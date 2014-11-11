@@ -37,7 +37,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, and wallpapers
-beautiful.init("/usr/share/awesome/themes/zenburn/theme.lua")
+beautiful.init("/usr/share/awesome/themes/dust/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "x-terminal-emulator"
@@ -122,6 +122,9 @@ vicious.register(batwidget, vicious.widgets.bat,
     end, 61, "BAT0"
 )
 -- }}}
+
+-- {{{ Wifi Widget
+wifiwidget = widget({type = "textbox", name = "wifiwidget", align = "right"})
 
 -- Create a systray
 mysystray = widget({ type = "systray" })
@@ -403,3 +406,4 @@ client.add_signal("unfocus", function(c) c.border_color = beautiful.border_norma
 -- Added to autostart various applications / processes on launch
 awful.util.spawn_with_shell("~/.dropbox-dist/dropboxd")
 awful.util.spawn_with_shell("redshift")
+awful.util.spawn_with_shell("~/scripts/./fix_keys.sh")
