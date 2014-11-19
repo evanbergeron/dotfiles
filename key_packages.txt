@@ -1,0 +1,14 @@
+[Music Player]
+cmus (though would like to switch to ncmpcpp + mpd)
+
+[File Manager]
+ranger
+
+[OS Information]
+archey
+
+[Image Viewer]
+feh
+
+[PDF Viewer]
+zathura
