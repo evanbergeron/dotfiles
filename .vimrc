@@ -120,3 +120,8 @@ colorscheme zenburn
 
 " Toggle paste mode
 :nmap \o :set paste!<CR>
+
+" Comment string for vim-commentary plugin for SML
+autocmd FileType sml set commentstring=\(*\ %s\ *\)
+
+au BufRead,BufNewFile *.sig sml filetype=sml
