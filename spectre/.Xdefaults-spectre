@@ -1,0 +1,44 @@
+URxvt.depth: 32
+
+URxvt.saveLines:32767
+URxvt.scrollBar: false
+
+URxvt*font: xft:Inconsolata:pixelsize=10
+
+! Pseudo Transparency
+! URxvt*shading: 20
+! URxvt*transparent:true
+
+URxvt.perl-ext-common: default,matcher
+URxvt.urlLauncher: uzbl-browser
+URxvt.matcher.button: 2
+URxvt.matcher.pattern.1: \\bwww\\.[\\w-]\\.[\\w./?&@#-]*[\\w/-]
+
+!!URxvt Color Scheme - Spectre
+*background: #222426
+*foreground: #D2C5BC
+
+! BLACK
+*color0:  #525252
+*color8:  #707070
+! RED
+*color1:  #B0777B
+*color9:  #AA7E87
+! GREEN
+*color2:  #94A65D
+*color10: #BACD8F
+! YELLOW
+*color3:  #E8C98E
+*color11: #E0B274
+! BLUE
+*color4:  #869AA3
+*color12: #96A8B7
+! MAGENTA
+*color5:  #9F98B7
+*color13: #A393CE
+! CYAN
+*color6:  #93A2B9
+*color14: #9BB7CC
+! WHITE
+*color7:  #D2D1D4
+*color15: #D6DAC3
