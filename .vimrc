@@ -1,6 +1,7 @@
 filetype off
 " Basic Shit
 syntax on
+set relativenumber
 set number " line numbers
 "Set tab to 4 spaces
 set smartindent
@@ -116,10 +117,26 @@ map <C-n> :NERDTreeToggle<CR>
 let g:vimwiki_list = [{"path":"~/Dropbox/wiki"}]
 
 " At end because it works here, I guess.
-colorscheme zenburn
+" colorscheme zenburn
+colorscheme spectre
 
 " Toggle paste mode
 :nmap \o :set paste!<CR>
+
+" Relative Line Numbers
+function! NumberToggle()
+  if(&relativenumber == 1)
+    set number
+  else
+    set relativenumber
+  endif
+endfunc
+
+" Toggle relative line numbers
+nnoremap <C-n> :call NumberToggle()<cr>
+
+" SyntaxAttr shortcut
+map -a :call SyntaxAttr#SyntaxAttr()<CR>
 
 " Comment string for vim-commentary plugin for SML
 autocmd FileType sml set commentstring=\(*\ %s\ *\)
