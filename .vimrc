@@ -6,7 +6,7 @@
 " Basics ------------------------------------------------------------
 
 set nocompatible " Must be first - changes other commands
-syntax on
+syntax enable
 filetype off
 filetype plugin indent on
 "Set tab to 4 spaces
@@ -14,12 +14,14 @@ set smartindent
 set tabstop=4  "4 space tabs
 set shiftwidth=4
 set mouse=a
-set background=dark
-colorscheme spectre
+set background=light
+let g:solarized_termtrans = 1
+colorscheme solarized
 
 cmap w!! %!sudo tee > /dev/null %  " Lol, don't use this on afs...
 set t_Co=256 "256 color
 set encoding=utf-8 "UTF-8 character encoding
+set laststatus=2 " Status bar at bottom
 set shiftwidth=4  "4 space shift
 set softtabstop=4  "Tab spaces in no hard tab mode
 set expandtab  " Expand tabs into spaces
@@ -110,6 +112,8 @@ endfunction
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
+nnoremap <silent> <F5> :!clear;python2 %<CR>
+
 " Undo / Swap/ Backup -----------------------------------------------
 
 " Persistent undo
@@ -137,6 +141,11 @@ autocmd FileType c setlocal shiftwidth=2
 autocmd FileType c setlocal tabstop=2
 autocmd FileType c setlocal softtabstop=2
 
+" Indent two spaces for latex
+autocmd FileType tex setlocal shiftwidth=2
+autocmd FileType tex setlocal tabstop=2
+autocmd FileType tex setlocal softtabstop=2
+
 " Comment string for vim-commentary plugin for SML
 autocmd FileType sml set commentstring=\(*\ %s\ *\)
 au BufRead,BufNewFile *.sig sml filetype=sml
@@ -156,3 +165,17 @@ let g:syntastic_python_python_exec="/usr/bin/python2"
 
 " Mapping for zenroom mode
 nnoremap <silent> <leader>g :Goyo<cr>
+
+" airline
+let g:airline_theme             = 'solarized'
+let g:airline_left_sep          = '>'
+let g:airline_left_alt_sep      = ''
+let g:airline_right_sep         = '<'
+let g:airline_right_alt_sep     = ''
+
+" vim-easy-align
+" Start interactive EasyAlign in visual mode (e.g. vip<Enter>)
+vmap <Enter> <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)

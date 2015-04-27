@@ -1,3 +1,4 @@
+# Slight recoloring of pdfs to fit with Solarized Light
 set recolor-darkcolor   "#586e75"
 set recolor-lightcolor  "#fdf6e3"
 set recolor             true
