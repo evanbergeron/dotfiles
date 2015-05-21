@@ -1,0 +1,41 @@
+import subprocess
+
+def outputOf(cmd):
+    process = subprocess.Popen(cmd.split(), stdout=subprocess.PIPE)
+    output = process.communicate()[0]
+    return output.strip()
+
+def desktops():
+    return outputOf("bspc query --desktops")
+
+def focusedDesktop():
+    return outputOf("bspc query --desktops --desktop focused")
+
+def clock():
+    return outputOf("date '+%H:%M")
+
+def battery():
+    return outputOf("cat /sys/class/power_supply/BAT0/capacity")
+
+def volume():
+    result = outputOf("amixer get Master")
+    return result.splitlines()[-1].split()[3][1:-1]
+
+def nowPlaying():
+    return outputOf("mpc current")
+
+def highlighted(text, color):
+    prefix = "%%{F%s}" % color
+    suffix = "%{F-}"
+    return prefix + text + suffix
+
+def barInput():
+    green = "#FF859900"
+    background = "#FF002B36"
+    foreground = "#FF657B83"
+
+    # highlighted(volume(), green)
+    return highlighted(focusedDesktop(), green)
+
+while True:
+    print barInput()
