@@ -76,6 +76,10 @@ nowplaying() {
     test -n "$cur" && $PARSER <<< $cur || echo "- stopped -"
 }
 
+weather() {
+    cat /home/evan/etc/weather
+}
+
 sigterm_handler() {
     bspc config top_padding 0 # Get rid of padding at top
     pkill bar # kill bar
@@ -93,6 +97,7 @@ while :; do
     buf="${buf}%{l}%{F${highlight}}%{F-}"
     buf="${buf} %{F${foreground}}[$(groups)]%{F-}"
     buf="${buf} %{F${highlight}}tunes:%{F-} %{F${foreground}}$(nowplaying)"%{F-}
+    buf="${buf} %{F${highlight}}wthr:%{F-} %{F${foreground}}$(weather)"%{F-}
     # buf="${buf} %{F${highlight}}NET:%{F-} %{F${foreground}}$(network) %{F-}"
 
     buf="${buf}%{r}"
