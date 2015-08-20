@@ -1,0 +1,20 @@
+source ~/mutt-colors-solarized-dark-16.muttrc
+
+set imap_user = "bergeronej@gmail.com"
+# set imap_pass = "security issue"
+
+set smtp_url = "smtp://bergeronej@smtp.gmail.com:587/"
+# set smtp_pass = "security issue"
+set from = "ebergeron@cmu.edu"
+set realname = "Evan Bergeron"
+
+set folder = "imaps://imap.gmail.com:993"
+set spoolfile = "+INBOX"
+set postponed="+[Gmail]/Drafts"
+
+set header_cache=~/.mutt/cache/headers
+set message_cachedir=~/.mutt/cache/bodies
+set certificate_file=~/.mutt/certificates
+
+set editor = vim
+set move = no
