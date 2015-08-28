@@ -14,7 +14,7 @@ set smartindent
 set tabstop=4  "4 space tabs
 set shiftwidth=4
 set mouse=a
-set background=light
+set background=dark
 let g:solarized_termtrans = 1
 colorscheme solarized
 
@@ -54,6 +54,7 @@ set nostartofline "Vertical movement preserves horizontal position
 if exists('&breakindent')
   set breakindent " Indent wrapped lines to same level
 endif
+
 
 " Remappings --------------------------------------------------------
 
@@ -114,6 +115,27 @@ vnoremap <silent> # :call VisualSelection('b')<CR>
 
 nnoremap <silent> <F5> :!clear;python2 %<CR>
 
+if has('nvim')
+    " Mimic my tmux.conf
+    :noremap <C-f> <C-w> " This will horribly break tmux, intended to replace it
+    :tnoremap <Esc> <C-\><C-n> " Escape out of insert mode in term 
+    :noremap <Leader>" :sp term://zsh<CR>
+    :noremap <Leader>v :vsp term://zsh<CR>
+    :noremap <C-f>" :sp term://zsh<CR>
+    :noremap <C-f>v :vsp term://zsh<CR>
+
+    :noremap <Leader>t :sp term://zsh<CR>
+    :noremap <Leader>T :vsp term://zsh<CR>
+    :tnoremap <Leader>h <C-\><C-n><C-w>h
+    :tnoremap <Leader>j <C-\><C-n><C-w>j
+    :tnoremap <Leader>k <C-\><C-n><C-w>k
+    :tnoremap <Leader>l <C-\><C-n><C-w>l
+    :nnoremap <Leader>h <C-w>h
+    :nnoremap <Leader>j <C-w>j
+    :nnoremap <Leader>k <C-w>k
+    :nnoremap <Leader>l <C-w>l
+endif
+
 " Undo / Swap/ Backup -----------------------------------------------
 
 " Persistent undo
@@ -121,15 +143,6 @@ set undodir=~/.vim/undodir
 set undofile
 set undolevels=1000 "maximum number of changes that can be undone
 set undoreload=10000 "maximum number lines to save for undo on a buffer reload
-
-" Backup and no Swap File
-set backup
-set noswapfile
-set backupdir=~/.vim/tmp/backup
-set directory=~/.vim/tmp/swap
-
-" Strip whitespace from end of lines when writing file
-autocmd BufWritePre * :%s/\s\+$//e
 
 " FileType Commands -------------------------------------------------
 
