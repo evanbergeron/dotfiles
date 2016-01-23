@@ -205,7 +205,7 @@ let g:airline_right_alt_sep     = ''
 " vim-easy-align
 vmap <Enter> <Plug>(EasyAlign)
 
-autocmd BufWrite *.tex :Latexmk
+autocmd BufWritePost *.tex :Latexmk
 
 " For Merlin (Ocaml completion)
 let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
