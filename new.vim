@@ -189,8 +189,12 @@ let g:hybrid_custom_term_colors = 1
 let g:hybrid_reduced_contrast = 1
 colorscheme hybrid
 
-" Syntastic checks for python 2, not 3
+" Syntastic
 let g:syntastic_python_python_exec="/usr/bin/python2"
+let g:syntastic_sml_smlnj_args = "-m sources.cm"
+let g:syntastic_sml_smlnj_fname = ""
+au FileType sml let g:syntastic_always_populate_loc_list = 1
+au FileType sml let g:syntastic_auto_loc_list = 1
 
 " Mapping for zenroom mode
 nnoremap <silent> <leader>g :Goyo<cr>
@@ -212,3 +216,8 @@ let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
 execute "set rtp+=" . g:opamshare . "/merlin/vim"
 let g:syntastic_ocaml_checkers = ['merlin']
 noremap <Leader>t :MerlinTypeOf<CR>
+
+" Black magic from the almighty Tim Pope
+" Allows you to say ys<text object>c<latex command>
+" to wrap a text object in a latex command
+let g:surround_{char2nr('c')} = "\\\1command\1{\r}"
