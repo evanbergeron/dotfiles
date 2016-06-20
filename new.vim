@@ -16,13 +16,14 @@ Plugin 'gmarik/Vundle.vim'
 
 " Visuals
 Plugin 'altercation/vim-colors-solarized'
+Plugin 'vim-airline/vim-airline-themes'
 Plugin 'bling/vim-airline'
 Plugin 'w0ng/vim-hybrid'
 
 " Useful programming utilities
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
-Plugin 'kien/ctrlp.vim'         " new
+Plugin 'ctrlp-vim/ctrlp.vim'    " new
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'     " new
 Plugin 'tpope/vim-commentary'
@@ -31,6 +32,9 @@ Plugin 'LaTeX-Box-Team/LaTeX-Box'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/goyo.vim'
+
+Plugin 'ManOfTeflon/exterminator'
+Plugin 'Superbil/llvm.vim'
 
 " To get:
 " vim-latex
@@ -43,8 +47,8 @@ call vundle#end()
 " Basics ------------------------------------------------------------
 
 set smartindent
-set tabstop=2           " 4 space tabs
-set shiftwidth=2
+set tabstop=4           " 4 space tabs
+set shiftwidth=4
 set mouse=a
 set laststatus=2        " Status bar at bottom
 set expandtab           " Expand tabs into spaces
@@ -82,6 +86,8 @@ set wildignore+=*.o,*.obj,*.class,*.swp,*.pyc "Ignore junk files
 
 syntax on
 set background=dark
+set t_Co=256
+set term=screen-256color
 
 " Remappings --------------------------------------------------------
 
@@ -125,6 +131,12 @@ endfunction
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
 
+set tags=~/memsql/tags
+
+" Leader-d now opens ctag definition in a split
+nnoremap <silent><Leader>d <C-w><C-]>
+nnoremap <silent><Leader>o <C-w><C-]><C-w>T
+
 " Undo / Swap/ Backup -----------------------------------------------
 
 " Persistent undo
@@ -138,9 +150,6 @@ set backup
 set noswapfile
 set backupdir=~/.vim/tmp/backup
 set directory=~/.vim/tmp/swap
-
-" Strip whitespace from end of lines when writing file
-autocmd BufWritePre * :%s/\s\+$//e
 
 " FileType Commands -------------------------------------------------
 
@@ -200,7 +209,6 @@ au FileType sml let g:syntastic_auto_loc_list = 1
 nnoremap <silent> <leader>g :Goyo<cr>
 
 " airline
-let g:airline_theme             = 'solarized'
 let g:airline_left_sep          = '>'
 let g:airline_left_alt_sep      = ''
 let g:airline_right_sep         = '<'
