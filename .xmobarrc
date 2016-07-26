@@ -1,0 +1,20 @@
+Config { font = "xft:inconsolatalgc:pixelsize=12:antialias=true"
+  , bgColor = "#232C31"
+  , fgColor = "#C5C8C6"
+  , border = NoBorder
+  , borderColor = "black"
+  , hideOnStart = False
+  , persistent = True
+  , position = Top
+  , lowerOnStart = True
+  , commands = [ Run Weather "KAGC" ["-t"," <tempF>F","-L","64","-H","77","--normal","#657b83","--high","#657b83","--low","#657b83"] 36000
+  , Run Network "wlp3s0" ["-L","0","-H","32","--normal","#657b83","--high","#657b83"] 10
+  , Run Com "/home/evan/scripts/volume.sh" [] "vol" 1
+  , Run Com "/home/evan/scripts/battery" [] "bat" 1
+  , Run Date "<fc=#93a1a1>%a %H:%M</fc>" "date" 10
+  , Run StdinReader
+]
+  , sepChar = "%"
+  , alignSep = "}{"
+  , template = " %StdinReader% }{ PGH:%KAGC% | vol: %vol% | bat: [%bat%] | %date% "
+}
