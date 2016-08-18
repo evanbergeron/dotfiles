@@ -35,6 +35,7 @@ Plugin 'junegunn/goyo.vim'
 
 Plugin 'ManOfTeflon/exterminator'
 Plugin 'Superbil/llvm.vim'
+Plugin 'ryanss/vim-hackernews'
 
 " To get:
 " vim-latex
@@ -127,6 +128,25 @@ endfunction
 :inoremap <Tab> <C-R>=Tab_Or_Complete()<CR>
 :set dictionary="/usr/dict/words"
 
+" Strip trailing whitespace from file
+noremap <Leader>s :%s/\s\+$//e<CR>:noh<CR>
+
+" Visual mode mapping for search highlighted text
+vnoremap <Leader>f y/<C-R>"<CR>
+
+" The Silver Searcher
+if executable('ag')
+  " Use ag over grep
+  set grepprg=ag\ --nogroup\ --nocolor\ -i
+  " Use ag in CtrlP for listing files. Lightning fast and respects .gitignore
+  let g:ctrlp_user_command = 'ag %s -l --nocolor -g "'
+
+  " ag is fast enough that CtrlP doesn't need to cache
+  let g:ctrlp_use_caching = 0
+endif
+
+let g:ctrlp_cmd = 'CtrlPMRU'
+
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f')<CR>
 vnoremap <silent> # :call VisualSelection('b')<CR>
@@ -181,8 +201,6 @@ au BufRead,BufNewFile *.sig sml filetype=sml
 augroup filetypedetect
   au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
 augroup END
-
-
 
 " Plugin Commands ---------------------------------------------------
 
