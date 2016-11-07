@@ -6,7 +6,6 @@
 set nocompatible " Must be first - changes other commands
 
 filetype off
-filetype plugin on
 set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin()
@@ -22,20 +21,22 @@ Plugin 'w0ng/vim-hybrid'
 
 " Useful programming utilities
 Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'ctrlp-vim/ctrlp.vim'    " new
+Plugin 'vim-syntastic/syntastic'
+Plugin 'ctrlpvim/ctrlp.vim'    " new
 Plugin 'Raimondi/delimitMate'
 Plugin 'tpope/vim-surround'     " new
 Plugin 'tpope/vim-commentary'
 Plugin 'vim-latex/vim-latex'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
+Plugin 'rust-lang/rust.vim'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/goyo.vim'
 
-Plugin 'ManOfTeflon/exterminator'
+" Plugin 'ManOfTeflon/exterminator'
 Plugin 'Superbil/llvm.vim'
 Plugin 'ryanss/vim-hackernews'
+Plugin 'adimit/prolog.vim'
 
 " To get:
 " vim-latex
@@ -44,6 +45,7 @@ Plugin 'ryanss/vim-hackernews'
 " elm.vim
 "
 call vundle#end()
+filetype plugin on
 
 " Basics ------------------------------------------------------------
 
