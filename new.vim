@@ -204,6 +204,15 @@ augroup filetypedetect
   au! BufRead,BufNewFile *.sage,*.spyx,*.pyx setfiletype python
 augroup END
 
+" Neovim stuff ------------------------------------------------------
+
+if has('nvim')
+  " noremap <silent><Leader>t :split terminal<CR>
+  tnoremap <Leader>t <C-\><C-n>
+  nnoremap <leader>t :below 10sp term://$SHELL<cr>i
+  " noremap <silent><Leader>y <C-\><C-n> " escape out of terminal mode
+endif
+
 " Plugin Commands ---------------------------------------------------
 
 " Set for nerdtree toggle
@@ -239,11 +248,11 @@ vmap <Enter> <Plug>(EasyAlign)
 
 autocmd BufWritePost *.tex :Latexmk
 
-" For Merlin (Ocaml completion)
-let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
-execute "set rtp+=" . g:opamshare . "/merlin/vim"
-let g:syntastic_ocaml_checkers = ['merlin']
-noremap <Leader>t :MerlinTypeOf<CR>
+" " For Merlin (Ocaml completion)
+" let g:opamshare = substitute(system('opam config var share'),'\n$','','''')
+" execute "set rtp+=" . g:opamshare . "/merlin/vim"
+" let g:syntastic_ocaml_checkers = ['merlin']
+" noremap <Leader>t :MerlinTypeOf<CR>
 
 " Black magic from the almighty Tim Pope
 " Allows you to say ys<text object>c<latex command>
