@@ -79,6 +79,8 @@ set nolist
 set linebreak           " Intelligently wrap long files
 set ttyfast             " Speed up vim
 set nostartofline       " Vertical movement preserves horizontal position
+" set wildmenu
+" set path=**
 if exists('&breakindent')
   set breakindent       " Indent wrapped lines to same level
 endif
@@ -91,7 +93,7 @@ set wildignore+=*.o,*.obj,*.class,*.swp,*.pyc "Ignore junk files
 syntax on
 set background=dark
 set t_Co=256
-set term=screen-256color
+" set term=screen-256color
 
 " Remappings --------------------------------------------------------
 
@@ -133,6 +135,7 @@ endfunction
 
 " Strip trailing whitespace from file
 noremap <Leader>s :%s/\s\+$//e<CR>:noh<CR>
+noremap <Leader>p :setlocal spell spelllang=en_us
 
 " Visual mode mapping for search highlighted text
 vnoremap <Leader>f y/<C-R>"<CR>
@@ -189,6 +192,7 @@ au BufReadPost *.l3 set syntax=c
 au BufReadPost *.l4 set syntax=c
 au BufReadPost *.l5 set syntax=c
 au BufReadPost *.l6 set syntax=c
+au BufReadPost *.sage set syntax=python
 
 " Syntax highlighting for one liners
 au BufReadPost *.1l set syntax=python
@@ -203,7 +207,7 @@ au BufRead,BufNewFile *.sig sml filetype=sml
 
 function! OpenPDFFromTex()
     silent !clear
-    execute "!zathura `echo % | sed -e 's/tex$/pdf/g'`"
+    execute "!zathura `echo % | sed -e 's/tex$/pdf/g'`&"
 endfunction
 
 augroup texMaps 
