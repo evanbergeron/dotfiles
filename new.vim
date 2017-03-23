@@ -29,6 +29,7 @@ Plugin 'tpope/vim-commentary'
 Plugin 'vim-latex/vim-latex'
 Plugin 'LaTeX-Box-Team/LaTeX-Box'
 Plugin 'rust-lang/rust.vim'
+Plugin 'jez/vim-better-sml'
 
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'junegunn/goyo.vim'
@@ -196,8 +197,25 @@ au BufReadPost *.1l set syntax=python
 autocmd FileType sml set commentstring=\(*\ %s\ *\)
 autocmd FileType ocaml set commentstring=\(*\ %s\ *\)
 autocmd FileType tex set commentstring=\%\ %s
+autocmd FileType matlab set commentstring=\%\ %s
 autocmd FileType vim set commentstring=\"\ %s
 au BufRead,BufNewFile *.sig sml filetype=sml
+
+function! OpenPDFFromTex()
+    silent !clear
+    execute "!zathura `echo % | sed -e 's/tex$/pdf/g'`"
+endfunction
+
+augroup texMaps 
+  au!
+  au FileType tex nnoremap <Leader>z :call OpenPDFFromTex()<CR>
+augroup END
+
+augroup smlMaps
+  au!
+  au FileType sml nnoremap <Leader>t :SMLTypeQuery<CR>
+  au FileType sml nnoremap <C-]> :SMLJumpToDef<CR>
+augroup END
 
 " Syntax highlighting for sage
 augroup filetypedetect
@@ -208,8 +226,8 @@ augroup END
 
 if has('nvim')
   " noremap <silent><Leader>t :split terminal<CR>
-  tnoremap <Leader>t <C-\><C-n>
-  nnoremap <leader>t :below 10sp term://$SHELL<cr>i
+  tnoremap <Leader>r <C-\><C-n>
+  nnoremap <leader>r :below 10sp term://$SHELL<cr>i
   " noremap <silent><Leader>y <C-\><C-n> " escape out of terminal mode
 endif
 
