@@ -1,0 +1,28 @@
+#!/usr/bin/python2
+import argparse
+
+# Assumes monthly compounding for now
+def compound_interest(base, annual_interest_rate, years, monthly_deposit):
+    principal = base
+    months_per_year = 12
+    for month in range(months_per_year * years):
+        principal = principal + monthly_deposit
+        principal *= (100 + (annual_interest_rate / months_per_year)) / 100
+    return principal
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument('-y', default=10, type=int, help='Years')
+    parser.add_argument('-b', default=0, type=float, help='Base principal')
+    parser.add_argument('-r', default=7.0, type=float, help='Interest rate')
+    parser.add_argument('-m', type=float, help='Monthly despoit')
+    args = parser.parse_args()
+
+    if args.r is None or args.m is None:
+        parser.print_help()
+        return
+
+    print("%0.2f" % compound_interest(args.b, args.r, args.y, args.m))
+
+if __name__ == '__main__':
+    main()
