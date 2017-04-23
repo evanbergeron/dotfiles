@@ -67,7 +67,7 @@
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
   "e" 'find-file
-  "t" 'ansi-term
+  "t" 'eshell
   "b" 'switch-to-buffer
   "a" 'balance-windows-area
   "w" 'save-buffer)
@@ -116,6 +116,46 @@
 (require 'ido-grid-mode)
 (ido-mode t)
 (ido-grid-mode t)
+(require 'smex)
+(global-set-key (kbd "M-x") 'smex)
+(global-set-key (kbd "M-X") 'smex-major-mode-commands)
+;; Old M-x
+(global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+;; Eshell prompt stuff
+(defun pwd-replace-home (pwd)
+  "Replace home in PWD with tilde (~) character."
+  (interactive)
+  (let* ((home (expand-file-name (getenv "HOME")))
+         (home-len (length home)))
+    (if (and
+         (>= (length pwd) home-len)
+         (equal home (substring pwd 0 home-len)))
+        (concat "~" (substring pwd home-len))
+      pwd)))
+
+(defun pwd-shorten-dirs (pwd)
+  "Shorten all directory names in PWD except the last two."
+  (let ((p-lst (split-string pwd "/")))
+    (if (> (length p-lst) 2)
+        (concat
+         (mapconcat (lambda (elm) (if (zerop (length elm)) ""
+                               (substring elm 0 1)))
+                    (butlast p-lst 2)
+                    "/")
+         "/"
+         (mapconcat (lambda (elm) elm)
+                    (last p-lst 2)
+                    "/"))
+      pwd)))  ;; Otherwise, we just return the PWD
+
+(setq eshell-prompt-function (lambda nil
+   (concat
+    (propertize "λ " 'face `(:foreground "#b58900"))
+    (propertize (pwd-shorten-dirs (pwd-replace-home (eshell/pwd)))
+    'face `(:foreground "#839496"))
+    " "
+   )))
 
 ;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
