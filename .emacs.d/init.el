@@ -112,17 +112,10 @@
 (require 'smart-quotes)
 (add-hook 'text-mode-hook 'turn-on-smart-quotes)
 
-;; TODO this tab mapping conflicts with zlc plugin I believe
-;; (or maybe the default tab completion behavior
-;; 'ido-prev-match also exists
 (require 'ido)
 (require 'ido-grid-mode)
 (ido-mode t)
 (ido-grid-mode t)
-
-(defun ido-define-keys ()
-  (define-key ido-completion-map (kbd "\t") 'ido-next-match)
-(add-hook 'ido-setup-hook 'ido-define-keys))
 
 ;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
