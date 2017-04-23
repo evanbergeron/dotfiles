@@ -10,14 +10,14 @@
 ;;
 ;; IDO
 ;;   - Fuzzy completion
-;;   - Vertical layout (or grid layout)
-;;   - Tab completion (kill the default tab completion)
 ;; 
 ;; Doc-view
 ;;   - Vim-style keybindings
 ;;
 ;; Org-mode
 ;;   - Learn
+;;   - Use for personal finances + cost of various recipes!
+;;   - Use for lifting data!
 ;;
 ;; Magit
 ;;   - Learn
@@ -77,6 +77,8 @@
 ;; here
 (evil-commentary-mode)
 
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; This might be vim-purist heresy, but I prefer the behavior of
 ;; fill-paragraph to evil-fill-and-move. It's a bit more context-aware
 ;; - its approach to LaTeX enviornments is the killer feature for me
@@ -107,12 +109,17 @@
 (powerline-default-theme)
 
 (visual-line-mode 1)
+(require 'smart-quotes)
+(add-hook 'text-mode-hook 'turn-on-smart-quotes)
 
 ;; TODO this tab mapping conflicts with zlc plugin I believe
 ;; (or maybe the default tab completion behavior
 ;; 'ido-prev-match also exists
 (require 'ido)
+(require 'ido-grid-mode)
 (ido-mode t)
+(ido-grid-mode t)
+
 (defun ido-define-keys ()
   (define-key ido-completion-map (kbd "\t") 'ido-next-match)
 (add-hook 'ido-setup-hook 'ido-define-keys))
