@@ -1,3 +1,38 @@
+;;;;;;;;;;;;;;;;;;; TODO ;;;;;;;;;;;;;;;;;
+;; Aesthetics
+;;   - Make quotes match nicely
+;;   - Splash screen with LRU files + fun h@ck0r vibe
+;; 
+;; LaTex
+;;   - Compile on save
+;;   - Auto-reflow on save
+;;   - Easy keymapping to open pdf in split
+;;
+;; IDO
+;;   - Fuzzy completion
+;;   - Vertical layout (or grid layout)
+;;   - Tab completion (kill the default tab completion)
+;; 
+;; Doc-view
+;;   - Vim-style keybindings
+;;
+;; Org-mode
+;;   - Learn
+;;
+;; Magit
+;;   - Learn
+;;
+;; General preferences
+;;   - Tab completion
+;;   - Access ncmpcpp or cmus from inside
+;;   - Email
+;;   - Persistent undo
+;;   - Get rid of autogen'd font and appearence code
+;;
+;; General bugs
+;;   - C-h doesn't always work for switching panes
+;;
+
 (require 'package)
 
 ; List the packages you want
@@ -21,6 +56,8 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+;; Fix C-u vimemulation
+(setq evil-want-C-u-scroll t)
 (require 'evil)
 (evil-mode t)
 (global-linum-mode t)
@@ -35,19 +72,53 @@
   "a" 'balance-windows-area
   "w" 'save-buffer)
 
+;; TODO not sure if I need a
+;; (require 'evil-commentary)
+;; here
+(evil-commentary-mode)
+
+;; This might be vim-purist heresy, but I prefer the behavior of
+;; fill-paragraph to evil-fill-and-move. It's a bit more context-aware
+;; - its approach to LaTeX enviornments is the killer feature for me
+(define-key evil-normal-state-map "gq" 'fill-paragraph)
+
 ;; Important window moving bindings
 (global-set-key (kbd "C-j") 'windmove-down)
 (global-set-key (kbd "C-k") 'windmove-up)
 (global-set-key (kbd "C-h") 'windmove-left)
 (global-set-key (kbd "C-l") 'windmove-right)
 
-;; Fuck the GUI
+;; Fuck the GUI!
 (tool-bar-mode -1)
 (menu-bar-mode -1)
+(scroll-bar-mode -1)
+
+;; Visually match parens
+(show-paren-mode)
+
+(require 'linum-relative)
+(linum-relative-on)
 
 (line-number-mode 0)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'solarized-dark t)
+
+(require 'powerline)
+(powerline-default-theme)
+
+(visual-line-mode 1)
+
+;; TODO this tab mapping conflicts with zlc plugin I believe
+;; (or maybe the default tab completion behavior
+;; 'ido-prev-match also exists
+(require 'ido)
+(ido-mode t)
+(defun ido-define-keys ()
+  (define-key ido-completion-map (kbd "\t") 'ido-next-match)
+(add-hook 'ido-setup-hook 'ido-define-keys))
+
+;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
