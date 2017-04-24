@@ -1,6 +1,5 @@
 ;;;;;;;;;;;;;;;;;;; TODO ;;;;;;;;;;;;;;;;;
 ;; Aesthetics
-;;   - Make quotes match nicely
 ;;   - Splash screen with LRU files + fun h@ck0r vibe
 ;; 
 ;; LaTex
@@ -28,9 +27,11 @@
 ;;   - Email
 ;;   - Persistent undo
 ;;   - Get rid of autogen'd font and appearence code
+;;   - No line numbers in eshell
 ;;
 ;; General bugs
 ;;   - C-h doesn't always work for switching panes
+;;   - Fix LaTeX quotes
 ;;
 
 (require 'package)
@@ -61,6 +62,8 @@
 (require 'evil)
 (evil-mode t)
 (global-linum-mode t)
+(require 'linum-relative)
+(linum-relative-on)
 
 (require 'evil-leader)
 (global-evil-leader-mode)
@@ -72,10 +75,12 @@
   "a" 'balance-windows-area
   "w" 'save-buffer)
 
-;; TODO not sure if I need a
-;; (require 'evil-commentary)
-;; here
+(require 'evil-commentary)
 (evil-commentary-mode)
+
+(require 'evil-numbers)
+(define-key evil-normal-stat-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -98,15 +103,12 @@
 ;; Visually match parens
 (show-paren-mode)
 
-(require 'linum-relative)
-(linum-relative-on)
-
 (line-number-mode 0)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 (load-theme 'solarized-dark t)
 
 (require 'powerline)
-(powerline-default-theme)
+(powerline-center-evil-theme)
 
 (visual-line-mode 1)
 (require 'smart-quotes)
@@ -121,6 +123,9 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; Old M-x
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
+
+(setq backup-directory-alist `(("." . "~/.saves")))
+(setq backup-by-copying t)
 
 ;; Eshell prompt stuff
 (defun pwd-replace-home (pwd)
