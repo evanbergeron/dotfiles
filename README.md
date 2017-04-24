@@ -1,10 +1,19 @@
 # Dotfiles
-Yet another dotfiles repo. Used mainly for arch linux. Includes:
+Yet another dotfiles repo. Includes:
 
-- vimrc
+## Editors
+- Evil-mode-centric emacs.d
+- Its inspiration, my vimrc
+
+## Window managers
+- Awesome
+- bspwm
+- Xmonad
+
+## Shells
 - bashrc / zshrc
+
+## Etc
 - Xdefaults / Xresouces
-- Awesome WM configs and theme
-- bspwm WM configs and keybindings
-- solarized light zathura
+- Solarized light theme for zathura
 - Various scripts for keybindings / remappings
