@@ -79,8 +79,27 @@
 (evil-commentary-mode)
 
 (require 'evil-numbers)
-(define-key evil-normal-stat-map (kbd "C-a") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
+
+;; Make TeX-view open zathura instead of stupid evince
+(custom-set-variables
+ '(TeX-view-program-list (quote (("Zathura" "zathura %o")))) ; [1]
+ '(TeX-view-program-selection
+  (quote
+   (((output-dvi style-pstricks) "dvips and gv")
+   (output-dvi "xdvi")
+   (output-pdf "Zathura")                                    ; [2]
+   (output-html "xdg-open")))))
+
+;; TODO obviously this is a complete hack
+(defun run-pdflatex ()
+  "run a command on the current file and revert the buffer"
+  (interactive)
+  (shell-command 
+   (format "pdflatex %s > /dev/null" 
+       (shell-quote-argument (buffer-file-name))))
+  )
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
