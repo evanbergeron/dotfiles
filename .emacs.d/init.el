@@ -181,6 +181,22 @@
     " "
    )))
 
+;; TODO map eshell-next-matching-input to Control R
+;; TODO(Bold) implement comint-history-isearch-backward behavior for eshell
+
+(add-hook 'eshell-mode-hook
+     (lambda ()
+       (local-set-key (kbd "M-P") 'eshell-previous-prompt)
+       (local-set-key (kbd "M-N") 'eshell-next-prompt)
+       (local-set-key (kbd "M-R") 'eshell-list-history)
+       (local-set-key (kbd "M-s")
+              (lambda ()
+                (interactive)
+                (insert
+                 (ido-completing-read "Eshell history: "
+                                      (delete-dups
+                                       (ring-elements eshell-history-ring))))))))
+
 ;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
 
