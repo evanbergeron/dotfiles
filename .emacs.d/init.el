@@ -73,7 +73,7 @@
   "t" 'eshell
   "b" 'switch-to-buffer
   "a" 'balance-windows-area
-  "w" 'save-buffer)
+"w" 'save-buffer)
 
 (require 'evil-commentary)
 (evil-commentary-mode)
@@ -84,13 +84,23 @@
 
 ;; Make TeX-view open zathura instead of stupid evince
 (custom-set-variables
- '(TeX-view-program-list (quote (("Zathura" "zathura %o")))) ; [1]
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(TeX-view-program-list (quote (("Zathura" "zathura %o"))))
  '(TeX-view-program-selection
-  (quote
-   (((output-dvi style-pstricks) "dvips and gv")
-   (output-dvi "xdvi")
-   (output-pdf "Zathura")                                    ; [2]
-   (output-html "xdg-open")))))
+   (quote
+    (((output-dvi style-pstricks)
+      "dvips and gv")
+     (output-dvi "xdvi")
+     (output-pdf "Zathura")
+     (output-html "xdg-open"))))
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "08b8807d23c290c840bbb14614a83878529359eaba1805618b3be7d61b0b0a32" default)))
+ '(font-use-system-font t)
+ '(line-number-mode nil))
 
 ;; TODO obviously this is a complete hack
 (defun run-pdflatex ()
@@ -100,6 +110,8 @@
    (format "pdflatex %s > /dev/null" 
        (shell-quote-argument (buffer-file-name))))
   )
+
+;; (global-set-key (kbd "C-S-e") 'call-something-on-current-buffers-file)
 
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
@@ -124,14 +136,23 @@
 
 (line-number-mode 0)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
+
 (load-theme 'solarized-dark t)
+(setq active-theme 'solarized-dark)
+(defun toggle-solarized-theme ()
+  (interactive)
+  (if (eq active-theme 'solarized-light)
+      (setq active-theme 'solarized-dark)
+    (setq active-theme 'solarized-light))
+  (load-theme active-theme))
 
 (require 'powerline)
 (powerline-center-evil-theme)
 
 (visual-line-mode 1)
 (require 'smart-quotes)
-(add-hook 'text-mode-hook 'turn-on-smart-quotes)
+;; TODO need to turn off for some things
+;; (add-hook 'text-mode-hook 'turn-on-smart-quotes)
 
 (require 'ido)
 (require 'ido-grid-mode)
@@ -145,6 +166,8 @@
 
 (setq backup-directory-alist `(("." . "~/.saves")))
 (setq backup-by-copying t)
+
+(fset 'yes-or-no-p 'y-or-n-p)
 
 ;; Eshell prompt stuff
 (defun pwd-replace-home (pwd)
@@ -183,6 +206,8 @@
 
 ;; TODO map eshell-next-matching-input to Control R
 ;; TODO(Bold) implement comint-history-isearch-backward behavior for eshell
+;; TODO substring tab completion in eshell
+;; TODO ^^ can this use ido somehow?
 
 (add-hook 'eshell-mode-hook
      (lambda ()
@@ -197,19 +222,13 @@
                                       (delete-dups
                                        (ring-elements eshell-history-ring))))))))
 
+;; TODO IDO history completion in a python REPL
+;; Can write something like rlwrap for eshell+ido?
+
 ;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("08b8807d23c290c840bbb14614a83878529359eaba1805618b3be7d61b0b0a32" default)))
- '(font-use-system-font t)
- '(line-number-mode nil))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
