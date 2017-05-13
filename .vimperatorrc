@@ -1,0 +1,12 @@
+nnoremap j 6j
+nnoremap k 6k
+nnoremap l 6l
+
+nnoremap J :tabprevious<CR>
+nnoremap K :tabnext<CR>
+nnoremap u <PageUp>
+nnoremap d <PageDown>
+nnoremap x :tabclose<CR>
+nnoremap <BS> :back<CR>
+
+set hintchars=ghfjdkslatyrueiwoqp
