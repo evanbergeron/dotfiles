@@ -213,7 +213,6 @@
 ;; Old M-x
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
 (require 'org-journal)
-(require 'darkroom)
 
 (org-babel-do-load-languages
  'org-babel-load-languages
