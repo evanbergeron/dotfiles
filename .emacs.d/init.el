@@ -22,9 +22,6 @@
 ;;   - Use for lifting data!
 ;;   - Should get a good Texas method setup
 ;;
-;; Magit
-;;   - Learn
-;;
 ;; General preferences
 ;;   - Tab completion
 ;;   - Access ncmpcpp or cmus from inside
@@ -35,7 +32,6 @@
 ;;
 ;; General bugs
 ;;   - C-h doesn't always work for switching panes
-;;   - Fix LaTeX quotes
 ;;
 
 (require 'package)
@@ -111,6 +107,9 @@
  '(nrepl-message-colors
    (quote
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
+ '(package-selected-packages
+   (quote
+    (magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -186,8 +185,8 @@
 (line-number-mode 0)
 (add-to-list 'custom-theme-load-path "~/.emacs.d/themes")
 
-(load-theme 'evan t)
-(setq active-theme 'evan)
+(load-theme 'hybrid t)
+(setq active-theme 'hybrid)
 (defun toggle-solarized-theme ()
   (interactive)
   (if (eq active-theme 'solarized-light)
@@ -259,7 +258,7 @@
     " "
    )))
 
-(setq org-journal-dir "~/doc/journal")
+;; (setq org-journal-dir "~/doc/journal")
 
 ;; TODO map eshell-next-matching-input to Control R
 ;; TODO(Bold) implement comint-history-isearch-backward behavior for eshell
@@ -283,13 +282,12 @@
 ;; Can write something like rlwrap for eshell+ido?
 
 (add-hook 'prog-mode-hook 'highlight-numbers-mode)
+
 ;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
-
-
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata for Powerline" :foundry "PfEd" :slant normal :weight normal :height 110 :width normal)))))
+ '(default ((t (:family "Inconsolata for Powerline" :foundry "PfEd" :slant normal :weight normal :height 150 :width normal)))))
