@@ -82,6 +82,12 @@
 (define-key evil-normal-state-map (kbd "C-a") 'evil-numbers/inc-at-pt)
 (define-key evil-normal-state-map (kbd "C-x") 'evil-numbers/dec-at-pt)
 
+(define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
+
+(require 'key-chord)
+(key-chord-mode 1)
+(key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+
 ;; Make TeX-view open zathura instead of stupid evince
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -109,7 +115,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
+    (exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
@@ -223,6 +229,11 @@
 ;; Fuck 'yes' and 'no'
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(add-hook 'c-mode-common-hook
+          (lambda ()
+            (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+              (ggtags-mode 1))))
+
 ;; Eshell prompt stuff
 (defun pwd-replace-home (pwd)
   "Replace home in PWD with tilde (~) character."
@@ -255,10 +266,8 @@
     (propertize "λ " 'face `(:foreground "#b58900"))
     (propertize (pwd-shorten-dirs (pwd-replace-home (eshell/pwd)))
     'face `(:foreground "#839496"))
-    " "
-   )))
-
-;; (setq org-journal-dir "~/doc/journal")
+    " "))
+      eshell-prompt-regexp "λ ")
 
 ;; TODO map eshell-next-matching-input to Control R
 ;; TODO(Bold) implement comint-history-isearch-backward behavior for eshell
@@ -281,13 +290,39 @@
 ;; TODO IDO history completion in a python REPL
 ;; Can write something like rlwrap for eshell+ido?
 
-(add-hook 'prog-mode-hook 'highlight-numbers-mode)
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
+;; (defvar ido-enable-replace-completing-read t
+;;     "If t, use ido-completing-read instead of completing-read if possible.
+    
+;;     Set it to nil using let in around-advice for functions where the
+;;     original completing-read is required.  For example, if a function
+;;     foo absolutely must use the original completing-read, define some
+;;     advice like this:
+    
+;;     (defadvice foo (around original-completing-read-only activate)
+;;       (let (ido-enable-replace-completing-read) ad-do-it))")
+    
+;;     ;; Replace completing-read wherever possible, unless directed otherwise
+;;     (defadvice completing-read
+;;       (around use-ido-when-possible activate)
+;;       (if (or (not ido-enable-replace-completing-read) ; Manual override disable ido
+;;               (and (boundp 'ido-cur-list)
+;;                    ido-cur-list)) ; Avoid infinite loop from ido calling this
+;;           ad-do-it
+;;         (let ((allcomp (all-completions "" collection predicate)))
+;;           (if allcomp
+;;               (setq ad-return-value
+;;                     (ido-completing-read prompt
+;;                                    allcomp
+;;                                    nil require-match initial-input hist def))
+;;             ad-do-it))))
 
 ;;;;;;;;;;;;; BELOW HERE IS AUTO-GEN'd ;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;; What even is a GUI ;;;;;;;;;;;;;;;;
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "Inconsolata for Powerline" :foundry "PfEd" :slant normal :weight normal :height 150 :width normal)))))
+ )
