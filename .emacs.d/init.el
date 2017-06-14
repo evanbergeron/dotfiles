@@ -33,6 +33,8 @@
 ;; General bugs
 ;;   - C-h doesn't always work for switching panes
 ;;
+;; FOR WORK
+;; Get a mapping that opens a tag in a split 
 
 (require 'package)
 
@@ -57,6 +59,8 @@
   (unless (package-installed-p package)
     (package-install package)))
 
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+
 ;; Fix C-u vimemulation
 (setq evil-want-C-u-scroll t)
 (require 'evil)
@@ -73,6 +77,7 @@
   "t" 'eshell
   "b" 'switch-to-buffer
   "a" 'balance-windows-area
+  "m" 'man
 "w" 'save-buffer)
 
 (require 'evil-commentary)
@@ -87,6 +92,21 @@
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
+
+(setq-default indent-tabs-mode nil)
+(setq tab-width 2)
+(setq-default tab-always-indent 'complete)
+(setq initial-scratch-message "")
+
+(require 'company)
+(require 'company-simple-complete)
+;; company mode everywhere
+(add-hook 'after-init-hook 'global-company-mode)
+(setq company-backends (delete 'company-semantic company-backends))
+
+(define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
+;; (define-key c-mode-map  [(tab)] 'company-complete)
+;; (define-key c++-mode-map  [(tab)] 'company-complete)
 
 ;; Make TeX-view open zathura instead of stupid evince
 (custom-set-variables
@@ -115,8 +135,11 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
+    (company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
+ '(safe-local-variable-values
+   (quote
+    ((company-clang-arguments "-I/Users/evan/metalfe/include/" "-I/Users/evan/metalfe/llvm-src/llvm/include/"))))
  '(vc-annotate-background "#2B2B2B")
  '(vc-annotate-color-map
    (quote
@@ -167,8 +190,6 @@
 
 ;; (global-set-key (kbd "C-S-e") 'call-something-on-current-buffers-file)
 
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-
 ;; This might be vim-purist heresy, but I prefer the behavior of
 ;; fill-paragraph to evil-fill-and-move. It's a bit more context-aware
 ;; - its approach to LaTeX enviornments is the killer feature for me
@@ -212,6 +233,9 @@
 (require 'ido-grid-mode)
 (ido-mode t)
 (ido-grid-mode t)
+;; TODO maybe delete this; not sure if I had issues last time.
+(ido-everywhere t)
+
 (require 'smex)
 (global-set-key (kbd "M-x") 'smex)
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
@@ -261,13 +285,23 @@
                     "/"))
       pwd)))  ;; Otherwise, we just return the PWD
 
-(setq eshell-prompt-function (lambda nil
-   (concat
-    (propertize "λ " 'face `(:foreground "#b58900"))
-    (propertize (pwd-shorten-dirs (pwd-replace-home (eshell/pwd)))
-    'face `(:foreground "#839496"))
-    " "))
-      eshell-prompt-regexp "λ ")
+;; (setq eshell-prompt-function (lambda nil
+;;    (concat
+;;     (propertize "λ " 'face `(:foreground "#b58900"))
+;;     (propertize (pwd-shorten-dirs (pwd-replace-home (eshell/pwd)))
+;;     'face `(:foreground "#839496"))
+;;     " "))
+;;       eshell-prompt-regexp "λ ")
+
+;; Bugginess made me give up and just do identical prompt and regexp
+(setq eshell-prompt-function (lambda nil (concat (propertize "λ" 'face `(:foreground "#b58900"))
+						 (propertize " " 'face `(:foreground "#c5c8c6"))
+						 ))
+      eshell-prompt-regexp               (concat (propertize "λ" 'face `(:foreground "#b58900"))
+						 (propertize " " 'face `(:foreground "#c5c8c6"))
+						 )
+      )
+(setq read-file-name-completion-ignore-case t)
 
 ;; TODO map eshell-next-matching-input to Control R
 ;; TODO(Bold) implement comint-history-isearch-backward behavior for eshell
