@@ -69,6 +69,13 @@
 (require 'linum-relative)
 (linum-relative-on)
 
+(defun evil-shell-insert ()
+  "Jump to end of shell buffer in insert mode. Saves my left hand from
+   effectively chording S-g with S-a."
+  (interactive)
+  (end-of-buffer)
+  (evil-append-line 1))
+
 (require 'evil-leader)
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
@@ -78,6 +85,7 @@
   "b" 'switch-to-buffer
   "a" 'balance-windows-area
   "m" 'man
+  "i" 'evil-shell-insert
 "w" 'save-buffer)
 
 (require 'evil-commentary)
