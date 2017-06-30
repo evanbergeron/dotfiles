@@ -76,7 +76,34 @@
   (end-of-buffer)
   (evil-append-line 1))
 
+(defun toggle-window-split ()
+  (interactive)
+  (if (= (count-windows) 2)
+      (let* ((this-win-buffer (window-buffer))
+	     (next-win-buffer (window-buffer (next-window)))
+	     (this-win-edges (window-edges (selected-window)))
+	     (next-win-edges (window-edges (next-window)))
+	     (this-win-2nd (not (and (<= (car this-win-edges)
+					 (car next-win-edges))
+				     (<= (cadr this-win-edges)
+					 (cadr next-win-edges)))))
+	     (splitter
+	      (if (= (car this-win-edges)
+		     (car (window-edges (next-window))))
+		  'split-window-horizontally
+		'split-window-vertically)))
+	(delete-other-windows)
+	(let ((first-win (selected-window)))
+	  (funcall splitter)
+	  (if this-win-2nd (other-window 1))
+	  (set-window-buffer (selected-window) this-win-buffer)
+	  (set-window-buffer (next-window) next-win-buffer)
+	  (select-window first-win)
+	  (if this-win-2nd (other-window 1))))))
+
+
 (require 'evil-leader)
+(require 'fiplr)
 (global-evil-leader-mode)
 (evil-leader/set-leader "<SPC>")
 (evil-leader/set-key
@@ -86,6 +113,8 @@
   "a" 'balance-windows-area
   "m" 'man
   "i" 'evil-shell-insert
+  "s" 'toggle-window-split
+  "f" 'fiplr-find-file
 "w" 'save-buffer)
 
 (require 'evil-commentary)
@@ -103,7 +132,7 @@
 
 (setq-default indent-tabs-mode nil)
 (setq tab-width 2)
-(setq-default tab-always-indent 'complete)
+;; (setq-default tab-always-indent 'complete)
 (setq initial-scratch-message "")
 
 (require 'company)
@@ -143,7 +172,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
+    (fiplr irony company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(safe-local-variable-values
    (quote
@@ -195,8 +224,6 @@
    (format "./standalone %s > /dev/null" 
        (shell-quote-argument (buffer-file-name))))
   )
-
-;; (global-set-key (kbd "C-S-e") 'call-something-on-current-buffers-file)
 
 ;; This might be vim-purist heresy, but I prefer the behavior of
 ;; fill-paragraph to evil-fill-and-move. It's a bit more context-aware
@@ -261,10 +288,17 @@
 ;; Fuck 'yes' and 'no'
 (fset 'yes-or-no-p 'y-or-n-p)
 
+(add-to-list 'auto-mode-alist '("\\.metal\\'" . c++-mode))
+
 (add-hook 'c-mode-common-hook
           (lambda ()
             (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
               (ggtags-mode 1))))
+
+(add-hook 'c++-mode-hook 'irony-mode)
+(add-hook 'c-mode-hook 'irony-mode)
+
+(add-hook 'irony-mode-hook 'irony-cdb-autosetup-compile-options)
 
 ;; Eshell prompt stuff
 (defun pwd-replace-home (pwd)
@@ -292,6 +326,16 @@
                     (last p-lst 2)
                     "/"))
       pwd)))  ;; Otherwise, we just return the PWD
+
+;; Want to bind something to a combination of
+;; move-end-of-line (or evil-goto-line)
+;; evil-insert or (evil-append-line)
+
+(defun eshell-mode-hook-func ()
+  (setq eshell-path-env (concat "/Users/evan/build/DEBUG/host_objroot/bin:" eshell-path-env))
+  (setenv "PATH" (concat "/Users/evan/build/DEBUG/host_objroot/bin:" (getenv "PATH"))))
+
+(add-hook 'eshell-mode-hook 'eshell-mode-hook-func)
 
 ;; (setq eshell-prompt-function (lambda nil
 ;;    (concat
@@ -368,3 +412,4 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+(put 'erase-buffer 'disabled nil)
