@@ -126,6 +126,10 @@
 
 (define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
 
+(with-eval-after-load 'evil-maps
+  (define-key evil-motion-state-map (kbd ":") 'evil-repeat-find-char)
+  (define-key evil-motion-state-map (kbd ";") 'evil-ex))
+
 (require 'key-chord)
 (key-chord-mode 1)
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
