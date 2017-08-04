@@ -101,6 +101,7 @@
 	  (select-window first-win)
 	  (if this-win-2nd (other-window 1))))))
 
+(require 'cff)
 
 (require 'evil-leader)
 (require 'fiplr)
@@ -109,13 +110,14 @@
 (evil-leader/set-key
   "e" 'find-file
   "t" 'eshell
+  ;; "p" 'basic-save-buffer
   "b" 'switch-to-buffer
   "a" 'balance-windows-area
   "m" 'man
+  "h" 'cff-find-other-file
   "i" 'evil-shell-insert
   "s" 'toggle-window-split
-  "f" 'fiplr-find-file
-"w" 'save-buffer)
+  "f" 'fiplr-find-file)
 
 (require 'evil-commentary)
 (evil-commentary-mode)
@@ -149,6 +151,27 @@
 ;; (define-key c-mode-map  [(tab)] 'company-complete)
 ;; (define-key c++-mode-map  [(tab)] 'company-complete)
 
+(defvar my-cpp-other-file-alist
+  '(("\\.cpp\\'" (".h"))
+    ("\\.c\\'" (".h"))))
+
+;; (setq-default ff-other-file-alist 'my-cpp-other-file-alist)
+;; (setq ff-always-in-other-window 1)
+;; (setq ff-search-directories (list "." "~/metalfe/include"))
+
+;; (add-hook 'c-initialization-hook (lambda ()
+;;     (define-key c-mode-base-map [(meta o)] 'ff-get-other-file))
+;; )
+
+;; defines shortcut for find source/header file for the current
+;; file
+;; (add-hook 'c++-mode-hook
+;;           '(lambda ()
+;;              (define-key c-mode-base-map (kbd "M-o") 'cff-find-other-file)))
+;; (add-hook 'c-mode-hook
+;;           '(lambda ()
+;;              (define-key c-mode-base-map (kbd "M-o") 'cff-find-other-file)))
+
 ;; Make TeX-view open zathura instead of stupid evince
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -176,7 +199,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (fiplr irony company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
+    (cff fiplr irony company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(safe-local-variable-values
    (quote
@@ -336,8 +359,8 @@
 ;; evil-insert or (evil-append-line)
 
 (defun eshell-mode-hook-func ()
-  (setq eshell-path-env (concat "/Users/evan/build/DEBUG/host_objroot/bin:" eshell-path-env))
-  (setenv "PATH" (concat "/Users/evan/build/DEBUG/host_objroot/bin:" (getenv "PATH"))))
+  (setq eshell-path-env (concat "/Users/evan/build/metalfe/build-metalfe-host/Debug/build/bin:" eshell-path-env))
+  (setenv "PATH" (concat "/Users/evan/build/metalfe/build-metalfe-host/Debug/build/bin:" (getenv "PATH"))))
 
 (add-hook 'eshell-mode-hook 'eshell-mode-hook-func)
 
