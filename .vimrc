@@ -99,6 +99,10 @@ set t_Co=256
 
 let mapleader = "\<Space>"
 
+imap jk <Esc>
+imap kj <Esc>
+nmap ; :
+
 " Get rid of warning on save/exit typo
 command WQ wq
 command Wq wq
