@@ -114,7 +114,15 @@
   "b" 'switch-to-buffer
   "a" 'balance-windows-area
   "m" 'man
-  "h" 'cff-find-other-file
+  "r" 'cff-find-other-file
+  "j" 'evil-window-down
+  "g" 'magit
+  "k" 'evil-window-up
+  "l" 'evil-window-right
+  "h" 'evil-window-left
+  "u" 'evil-scroll-up
+  "w" 'evil-scroll-up
+  "d" 'evil-scroll-down
   "i" 'evil-shell-insert
   "s" 'toggle-window-split
   "f" 'fiplr-find-file)
