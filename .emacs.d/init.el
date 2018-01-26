@@ -271,6 +271,10 @@
 (global-set-key (kbd "C-h") 'windmove-left)
 (global-set-key (kbd "C-l") 'windmove-right)
 
+;; Text size
+(global-set-key (kbd "C--") 'text-scale-decrease)
+(global-set-key (kbd "C-=") 'text-scale-increase)
+
 ;; Fuck the GUI!
 (tool-bar-mode -1)
 (menu-bar-mode -1)
