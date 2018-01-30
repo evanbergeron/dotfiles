@@ -136,6 +136,20 @@
 
 (define-key evil-normal-state-map (kbd "C-]") 'ggtags-find-tag-dwim)
 
+;; Emulate
+;;   noremap <silent> k gk
+;;   noremap <silent> j gj
+;; from vimrc.
+(define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
+(define-key evil-normal-state-map (kbd "$") 'evil-end-of-visual-line)
+;; There's probably a bit of loss of functionality here, as the
+;; default binding for 0 in evil mode is
+;; evil-digit-argument-or-evil-beginning-of-line, which sounds more
+;; complicated.
+(define-key evil-normal-state-map (kbd "0") 'evil-beginning-of-visual-line)
+(define-key evil-normal-state-map (kbd "^") 'evil-first-non-blank-of-visual-line)
+
 (with-eval-after-load 'evil-maps
   (define-key evil-motion-state-map (kbd ":") 'evil-repeat-find-char)
   (define-key evil-motion-state-map (kbd ";") 'evil-ex))
