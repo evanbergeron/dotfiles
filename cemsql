@@ -1,0 +1,68 @@
+#!/usr/bin/env bash
+
+function cur_git_branch {
+    cd $PATH_TO_MEMSQL;
+    result=$(git rev-parse --abbrev-ref HEAD);
+    echo $result;
+}
+
+target=$1;
+branch="$(cur_git_branch)"
+build_dir=$PATH_TO_MEMSQL/$target-$branch;
+
+echo $target;
+echo $build_dir;
+
+function clear_data {
+    cd $build_dir
+    rm -rf data/*
+}
+
+function clear_plancache {
+    cd $build_dir
+    rm -rf plancache/*
+}
+
+function clear {
+    clear_data;
+    clear_plancache;
+}
+
+function run_cmake {
+    memsql-build cmake --build-dir $build_dir $target
+}
+
+function run_make {
+    time memsql-build make --skip-binplace --build-dir $build_dir $target memsql-server
+}
+
+function build {
+    cd $PATH_TO_MEMSQL;
+    if [ ! -d $build_dir ]; then
+        mkdir $build_dir
+        run_cmake
+    fi
+    run_make
+}
+
+function build {
+    cd $PATH_TO_MEMSQL;
+    if [ ! -d $build_dir ]; then
+        mkdir $build_dir
+        run_cmake
+    fi
+    run_make
+}
+
+function run {
+    cd $build_dir;
+    cgdb --args ./memsqld --skynet=false --skynet_v5=false
+}
+
+function main {
+    clear
+    build
+    run
+}
+
+main
