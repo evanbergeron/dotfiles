@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# for i in $@
+# do
+#   echo $i
+# done
+
+redshift -O 3500 > /dev/null
+/home/evan/dotfiles/fix_keys
+
+screens=$(xrandr | grep '\bconnected' | cut -d " " -f1)
+echo $screens were connected 
+
+xrandr --output eDP-1 --off
+xrandr --output DP-1 --right-of DP-4 --auto
+
+screens=$(xrandr | grep '\bconnected' | cut -d " " -f1)
+echo $screens are connected 
+

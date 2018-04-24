@@ -124,8 +124,9 @@
   "w" 'evil-scroll-up
   "d" 'evil-scroll-down
   "i" 'evil-shell-insert
+  "l" 'linum-relative-toggle
   "s" 'toggle-window-split
-  "f" 'fiplr-find-file)
+  "f" 'clang-format-region)
 
 (require 'evil-commentary)
 (evil-commentary-mode)
@@ -159,7 +160,7 @@
 (key-chord-define evil-insert-state-map "jk" 'evil-normal-state)
 
 (setq-default indent-tabs-mode nil)
-(setq tab-width 2)
+(setq tab-width 4)
 ;; (setq-default tab-always-indent 'complete)
 (setq initial-scratch-message "")
 
@@ -176,6 +177,18 @@
 (defvar my-cpp-other-file-alist
   '(("\\.cpp\\'" (".h"))
     ("\\.c\\'" (".h"))))
+
+(require 'magit)
+(add-hook 'with-editor-mode-hook 'evil-insert-state)
+
+(add-to-list 'load-path (concat (getenv "PATH_TO_MEMSQL") "/utils/private/emacs/rtags"))
+;; (add-to-list 'load-path "/home/evan/memsql/utils/private/emacs/rtags")
+(require 'rtags)
+
+(require 'adaptive-wrap)
+(setq-default adaptive-wrap-extra-indent 2)
+(add-hook 'visual-line-mode-hook #'adaptive-wrap-prefix-mode)
+(global-visual-line-mode +1)
 
 ;; (setq-default ff-other-file-alist 'my-cpp-other-file-alist)
 ;; (setq ff-always-in-other-window 1)
@@ -212,7 +225,7 @@
    ["#3F3F3F" "#CC9393" "#7F9F7F" "#F0DFAF" "#8CD0D3" "#DC8CC3" "#93E0E3" "#DCDCCC"])
  '(custom-safe-themes
    (quote
-    ("b0d8c9f81c9a67f4d41a9056848e4f7da664c4e12ed2870ac7b9c2f5d3c820b8" "ce1b4d9e73ad0a802795a9d87a3bb5c7fae6385f799b765339574312da17704f" "09925db9ced19954de50b076f9723929ed9a0d8a9d51d395840d75d8123af320" "ecb672899531da18413f35fb531e96bdf98b2e5b52fbfc88b9aeb2dbb032c9d3" "5ccedf10d6537e06b61f86668fbc99b72f03438d08d20076b91c515b5e611c5d" "54d9e573780a69fc18e4551cc3a64b9c35712ed2db1aa70fb871b822deb45517" "2195712f18461c096cbcacb28ac2e98af069c429dfd13bea7e7b3070ee2392af" "cae57ae0e23d58934eb0b696a131273481039dc40a05f3cb7ed90570c3171587" "8270d32e3d273e339f7c815426fb79d47e73d10af3f628c12064f85de9b6f42e" "b70a5cf1a9f5b0064cddce9f99bbeb7d1ba4c8469c449f12149cada621ed16e2" "932ed7410a0de773562bd3282371e6b25a616cd5ac7b2a085a1c9af0d2c70787" "f4dc6799efc868f03e6bf59ba2f267938f2867b0e999b421addfc77b4f9a9dd7" "cbc0d140ae652159ce19a5777e0c2122eb05a3610ccace6132268af38fff6cf4" "1ffd1bd5b873e2e54d294212b1d2eede30546682a30bab68874912a914bb4729" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "f50aa7409dff79a72d530a55fdd42cbaa8217d47f83cfb1c753a289e02e49a6b" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "08b8807d23c290c840bbb14614a83878529359eaba1805618b3be7d61b0b0a32" default)))
+    ("e8ebf4fb99b76dad3b7ec2313d5d091c1f3a3e0e4f9d55d3a58d73a8d3387358" "58572b25dff279a21f80df16a91c45f76bcf206946ae739161404f5b73bfeea1" "b0d8c9f81c9a67f4d41a9056848e4f7da664c4e12ed2870ac7b9c2f5d3c820b8" "ce1b4d9e73ad0a802795a9d87a3bb5c7fae6385f799b765339574312da17704f" "09925db9ced19954de50b076f9723929ed9a0d8a9d51d395840d75d8123af320" "ecb672899531da18413f35fb531e96bdf98b2e5b52fbfc88b9aeb2dbb032c9d3" "5ccedf10d6537e06b61f86668fbc99b72f03438d08d20076b91c515b5e611c5d" "54d9e573780a69fc18e4551cc3a64b9c35712ed2db1aa70fb871b822deb45517" "2195712f18461c096cbcacb28ac2e98af069c429dfd13bea7e7b3070ee2392af" "cae57ae0e23d58934eb0b696a131273481039dc40a05f3cb7ed90570c3171587" "8270d32e3d273e339f7c815426fb79d47e73d10af3f628c12064f85de9b6f42e" "b70a5cf1a9f5b0064cddce9f99bbeb7d1ba4c8469c449f12149cada621ed16e2" "932ed7410a0de773562bd3282371e6b25a616cd5ac7b2a085a1c9af0d2c70787" "f4dc6799efc868f03e6bf59ba2f267938f2867b0e999b421addfc77b4f9a9dd7" "cbc0d140ae652159ce19a5777e0c2122eb05a3610ccace6132268af38fff6cf4" "1ffd1bd5b873e2e54d294212b1d2eede30546682a30bab68874912a914bb4729" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "f50aa7409dff79a72d530a55fdd42cbaa8217d47f83cfb1c753a289e02e49a6b" "a1289424bbc0e9f9877aa2c9a03c7dfd2835ea51d8781a0bf9e2415101f70a7e" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "08b8807d23c290c840bbb14614a83878529359eaba1805618b3be7d61b0b0a32" default)))
  '(fci-rule-color "#383838")
  '(font-use-system-font t)
  '(line-number-mode nil)
@@ -221,7 +234,7 @@
     ("#CC9393" "#DFAF8F" "#F0DFAF" "#7F9F7F" "#BFEBBF" "#93E0E3" "#94BFF3" "#DC8CC3")))
  '(package-selected-packages
    (quote
-    (cff fiplr irony company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline org-journal linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
+    (cff fiplr irony company list-packages-ext rainbow-mode exec-path-from-shell ggtags magit highlight-numbers solarized-theme smex powerline linum-relative ido-grid-mode evil-numbers evil-leader evil-commentary dracula-theme atom-one-dark-theme)))
  '(pdf-view-midnight-colors (quote ("#DCDCCC" . "#383838")))
  '(safe-local-variable-values
    (quote
@@ -329,7 +342,8 @@
 (global-set-key (kbd "M-X") 'smex-major-mode-commands)
 ;; Old M-x
 (global-set-key (kbd "C-c C-c M-x") 'execute-extended-command)
-(require 'org-journal)
+;; (require 'org-journal)
+;; (setq 'org-journal-dir "/home/evan/org-journal")
 
 (org-babel-do-load-languages
  'org-babel-load-languages
@@ -386,6 +400,7 @@
 
 (defun eshell-mode-hook-func ()
   (setq eshell-path-env (concat "/Users/evan/build/metalfe/build-metalfe-host/Debug/build/bin:" eshell-path-env))
+  ;; (setenv "PATH_TO_MEMSQL" "/home/evan/memsql")
   (setenv "PATH" (concat "/Users/evan/build/metalfe/build-metalfe-host/Debug/build/bin:" (getenv "PATH"))))
 
 (add-hook 'eshell-mode-hook 'eshell-mode-hook-func)

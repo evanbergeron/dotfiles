@@ -6,7 +6,7 @@ function cur_git_branch {
     echo $result;
 }
 
-target=$1;
+target=debug;
 branch="$(cur_git_branch)"
 build_dir=$PATH_TO_MEMSQL/$target-$branch;
 
@@ -24,6 +24,8 @@ function clear_plancache {
 }
 
 function clear {
+    # TODO memsqlctl puts their stuff in a nodes directory, so this
+    # won't work as is.
     clear_data;
     clear_plancache;
 }
@@ -59,10 +61,13 @@ function run {
     cgdb --args ./memsqld --skynet=false --skynet_v5=false
 }
 
+# TODO run_distr complete with pipe-ing sharding setup
+
 function main {
     clear
-    build
-    run
+    # TODO if build fails, don't run 'run'
+    # build
+    # run
 }
 
 main
