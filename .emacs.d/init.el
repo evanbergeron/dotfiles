@@ -4,6 +4,7 @@
 
 (require 'init-package)
 
+(require 'init-basics)
 (require 'init-evil)
 (require 'init-ido)
 (require 'init-windowing)
