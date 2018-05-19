@@ -1,0 +1,22 @@
+[user]
+    email = evan@memsql.com
+[color]
+    ui = auto
+[alias]
+    l = log
+    t = log --graph --all --full-history --color --pretty=format:"%x1b[33m%h%x09%x1b[34m%>>(20)%an%x20%x20%x20%x20%x1b[0m%s%x20%x1b[35m[%cr]%x1b[32m%d"
+    tree = log --graph --all --full-history --color --pretty=format:"%x1b[33m%h%x09%x1b[34m%>>(20)%an%x20%x20%x20%x20%x1b[0m%s%x20%x1b[35m[%cr]%x1b[32m%d"
+    d = diff
+    dh = diff HEAD~
+    g = grep
+    b = branch --sort=committerdate
+    c = commit
+    s = status
+    a = add
+    cp = cherry-pick
+    co = checkout
+    week = log --author="Evan" --after={`date +%Y:%m:%d -d \"1 week ago\"`} --oneline
+    wt = worktree 
+
+[core]
+	editor = vim
