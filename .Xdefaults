@@ -3,8 +3,17 @@ URxvt.depth: 32
 URxvt.saveLines:32767
 URxvt.scrollBar: false
 
-URxvt*font: xft:Inconsolata:pixelsize=18
-URxvt.letterSpace: -5
+! URxvt*font: xft:Inconsolatas:pixelsize=16
+! URxvt.letterSpace: 1
+
+URxvt.xftAntialias:     true
+URxvt.font:             xft:inconsolata:pixelsize=20:antialias=true:hinting=true, xft:dejavu sans mono:pixelsize=20:antialias=true,hinting=true
+URxvt.boldFont:         xft:inconsolata:pixelsize=20:antialias=true:hinting=true, xft:dejavu sans mono:pixelsize=20:antialias=true,hinting=true
+URxvt.italicFont:       xft:inconsolata:pixelsize=20:antialias=true:hinting=true, xft:dejavu sans mono:pixelsize=20:antialias=true,hinting=true
+URxvt.bolditalicFont:   xft:inconsolata:pixelsize=20:antialias=true:hinting=true, xft:dejavu sans mono:pixelsize=20:antialias=true,hinting=true
+
+Xft.dpi: 150
+Xft.antialias: true
 
 ! Pseudo Transparency
 ! URxvt*shading: 20
